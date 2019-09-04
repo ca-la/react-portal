@@ -25,8 +25,8 @@ class Exit extends React.PureComponent<ExitProps> {
   }
 
   public render(): JSX.Element | null {
-    const { name, children, context } = this.props;
-    return context.getPortal(name) || children || null;
+    const { name, context } = this.props;
+    return context.getPortal(name) || null;
   }
 
   private forceUpdater = () => this.forceUpdate();

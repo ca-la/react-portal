@@ -137,4 +137,46 @@ describe('<PortalProvider />', () => {
       'This is interesting. Wow. Inside the portal. '
     );
   });
+
+  it('the last entrance renders to the exit', () => {
+    const portalComponent = render(
+      <PortalProvider>
+        <div>
+          <ExitPortal name='one' /> a{' '}
+          <EntrancePortal name='one'>
+            <div>1. Inside the portal</div>
+          </EntrancePortal>
+          b c
+          <EntrancePortal name='one'>
+            <div>2. Inside the portal</div>
+          </EntrancePortal>
+        </div>
+      </PortalProvider>
+    );
+
+    expect(portalComponent.baseElement.textContent).toEqual(
+      '2. Inside the portal a b c'
+    );
+  });
+
+  it('the exit never renders its own children', () => {
+    const portalComponent = render(
+      <PortalProvider>
+        <div>
+          <ExitPortal name='one'>
+            <div>I am an exit portal.</div>
+          </ExitPortal>{' '}
+          a{' '}
+          <EntrancePortal name='one'>
+            <div>Inside the portal.</div>
+          </EntrancePortal>
+          b c
+        </div>
+      </PortalProvider>
+    );
+
+    expect(portalComponent.baseElement.textContent).toEqual(
+      'Inside the portal. a b c'
+    );
+  });
 });

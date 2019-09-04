@@ -22,23 +22,35 @@
   },
   "homepage": "https://github.com/ca-la/react-portal#readme",
   "devDependencies": {
-    "ava": "^1.4.1",
+    "@testing-library/react": "^9.1.4",
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
     "prettier": "^1.14.3",
+    "react-dom": "^16.9.0",
+    "ts-jest": "^24.0.2",
     "ts-node": "^7.0.1"
   },
   "publishConfig": {
     "access": "restricted"
   },
-  "ava": {
-    "compileEnhancements": false,
-    "extensions": [
-      "ts"
+  "jest": {
+    "preset": "ts-jest",
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!**/*.d.ts"
     ],
-    "files": [
-      "src/**/*spec.ts"
-    ],
-    "require": [
-      "ts-node/register"
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testEnvironment": "jsdom",
+    "testRegex": "spec\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
     ]
   },
   "dependencies": {

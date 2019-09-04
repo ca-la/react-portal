@@ -13,7 +13,7 @@ export interface PortalValue {
 
 const PortalContext = React.createContext<PortalValue | null>(null);
 
-export class Provider extends React.PureComponent<PortalProviderProps> {
+export class PortalProvider extends React.PureComponent<PortalProviderProps> {
   private emitter: Emitter.TinyEmitter | null = null;
   private portals: Map<string, any[]> = new Map();
 
@@ -68,4 +68,4 @@ export class Provider extends React.PureComponent<PortalProviderProps> {
   }
 }
 
-export const Consumer = PortalContext.Consumer;
+export const PortalConsumer = PortalContext.Consumer;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Consumer, PortalValue } from './context';
+import { PortalConsumer, PortalValue } from './context';
 
 interface ExitPortalProps {
   name: string;
@@ -34,7 +34,7 @@ class Exit extends React.PureComponent<ExitProps> {
 export class ExitPortal extends React.PureComponent<ExitPortalProps> {
   public render(): JSX.Element {
     return (
-      <Consumer>
+      <PortalConsumer>
         {(portalContext: PortalValue | null): JSX.Element | null => {
           if (!portalContext) {
             return null;
@@ -46,7 +46,7 @@ export class ExitPortal extends React.PureComponent<ExitPortalProps> {
             </Exit>
           );
         }}
-      </Consumer>
+      </PortalConsumer>
     );
   }
 }

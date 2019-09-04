@@ -4,7 +4,7 @@ import { PortalConsumer, PortalValue } from './context';
 
 interface ExitPortalProps {
   name: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface ExitProps extends ExitPortalProps {
@@ -12,7 +12,9 @@ interface ExitProps extends ExitPortalProps {
 }
 
 class Exit extends React.PureComponent<ExitProps> {
-  public componentDidMount() {
+  constructor(props: ExitProps) {
+    super(props);
+
     const { name, context } = this.props;
     context.subscribeToPortal(name, this.forceUpdater);
   }
@@ -22,10 +24,9 @@ class Exit extends React.PureComponent<ExitProps> {
     context.unsubscribeFromPortal(name, this.forceUpdater);
   }
 
-  public render(): JSX.Element {
+  public render(): JSX.Element | null {
     const { name, children, context } = this.props;
-    const portalChildren = context.getPortal(name) || children;
-    return portalChildren;
+    return context.getPortal(name) || children || null;
   }
 
   private forceUpdater = () => this.forceUpdate();

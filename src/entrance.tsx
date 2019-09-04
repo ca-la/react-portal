@@ -4,7 +4,7 @@ import { PortalConsumer, PortalValue } from './context';
 
 interface EntrancePortalProps {
   name: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface EntranceProps extends EntrancePortalProps {
@@ -12,18 +12,17 @@ interface EntranceProps extends EntrancePortalProps {
 }
 
 class Entrance extends React.PureComponent<EntranceProps> {
-  public componentDidMount() {
+  constructor(props: EntranceProps) {
+    super(props);
+
     const { name, children, context } = this.props;
     context.setPortal(name, children);
   }
 
-  public componentWillReceiveProps(newProps: EntranceProps) {
-    const oldProps = this.props;
-    const { name, children, context } = newProps;
-
+  public componentDidUpdate(oldProps: EntranceProps) {
     // TODO do a deep equal examination
-    if (oldProps.children !== newProps.children) {
-      context.setPortal(name, children);
+    if (oldProps.children !== this.props.children) {
+      this.props.context.setPortal(name, this.props.children);
     }
   }
 

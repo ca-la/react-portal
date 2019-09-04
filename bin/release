@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# If you have a PGP key set up for commit signing, do a one-off signing of an
+# empty string to make sure gpg-agent has the key in memory
+preauth_pgp_signature() {
+  if [[ $(git config --get user.signingkey 2> /dev/null) != '' ]] ; then
+    echo '' | gpg --sign > /dev/null
+  fi
+}
+
+main() {
+  release_type=${1:-other}
+
+  if [[ $release_type != 'major' ]] &&
+    [[ $release_type != 'minor' ]] &&
+    [[ $release_type != 'patch' ]]
+  then
+    echo 'Usage: release [major|minor|patch]'
+    exit 1
+  fi
+
+  if [[ $(git rev-parse --abbrev-ref HEAD) != 'latest' ]] ; then
+    echo 'Cannot release from a branch other than master'
+    exit 1
+  fi
+
+  if [[ $(git describe --exact-match --tags HEAD 2> /dev/null) ]] ; then
+    echo 'Current commit is already a tag commit; not releasing it again'
+    exit 1
+  fi
+
+  if [[ $(git status --porcelain) != '' ]] ; then
+    echo 'Cannot release with uncommitted changes'
+    exit 1
+  fi
+
+  bin/test
+  preauth_pgp_signature
+
+  git pull --ff-only origin latest
+
+  npm version $release_type
+
+  git push --tags
+  git push origin latest
+
+  npm publish
+}
+
+main "$@"

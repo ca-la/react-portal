@@ -3,7 +3,6 @@ import * as Emitter from 'tiny-emitter';
 
 interface PortalProviderProps {}
 
-// TODO: tighten types
 export interface PortalValue {
   subscribeToPortal: Function;
   unsubscribeFromPortal: Function;

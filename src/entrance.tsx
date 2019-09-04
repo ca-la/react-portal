@@ -20,7 +20,6 @@ class Entrance extends React.PureComponent<EntranceProps> {
   }
 
   public componentDidUpdate(oldProps: EntranceProps) {
-    // TODO do a deep equal examination
     if (oldProps.children !== this.props.children) {
       this.props.context.setPortal(name, this.props.children);
     }

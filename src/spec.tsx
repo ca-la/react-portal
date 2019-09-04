@@ -6,6 +6,31 @@ import { PortalProvider, EntrancePortal, ExitPortal } from './index';
 describe('<PortalProvider />', () => {
   afterEach(cleanup);
 
+  it('will throw an error if a consumer is passed in with no provider', () => {
+    const originalErrorFn = console.error;
+    console.error = jest.fn();
+
+    expect(() =>
+      render(
+        <div>
+          Hello World.
+          <EntrancePortal name='entrance-once' />
+        </div>
+      )
+    ).toThrowError('EntrancePortal must be used inside a PortalProvider.');
+
+    expect(() =>
+      render(
+        <div>
+          Hello World.
+          <ExitPortal name='entrance-once' />
+        </div>
+      )
+    ).toThrowError('ExitPortal must be used inside a PortalProvider.');
+
+    console.error = originalErrorFn;
+  });
+
   it('can render an app in the provider', () => {
     const SampleApp = (): JSX.Element => <div>Hello, World.</div>;
     const portalComponent = render(

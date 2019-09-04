@@ -39,12 +39,12 @@ main() {
   bin/test
   preauth_pgp_signature
 
-  git pull --ff-only origin latest
+  git pull --ff-only origin master
 
   npm version $release_type
 
   git push --tags
-  git push origin latest
+  git push origin master
 
   npm publish
 }

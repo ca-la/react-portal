@@ -1,0 +1,48 @@
+{
+  "name": "@cala/react-portal",
+  "version": "0.0.1",
+  "description": "Portal your react components without the DOM.",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bin/test",
+    "prepublishOnly": "bin/test && bin/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ca-la/react-portal.git"
+  },
+  "author": "CALA <devops@ca.la>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ca-la/react-portal/issues"
+  },
+  "homepage": "https://github.com/ca-la/react-portal#readme",
+  "devDependencies": {
+    "ava": "^1.4.1",
+    "prettier": "^1.14.3",
+    "ts-node": "^7.0.1"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "files": [
+      "src/**/*spec.ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "dependencies": {
+    "tslib": "^1.9.3",
+    "typescript": "^3.4.5"
+  }
+}

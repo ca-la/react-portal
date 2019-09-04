@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -o pipefail
+
+# Format .ts source files that have been updated since master with
+# prettier.
+#
+# Usage: bin/format [-al]
+# Options:
+#  -a Run on all .ts files, not just divergent files
+#  -l List non-conforming files and exit with non-zero if any exist
+
+files=$(git diff --name-only master | grep ".ts$")
+prettier_opts="--write"
+
+while getopts "al" opt; do
+  case $opt in
+    a)
+      files='src/**/*.ts'
+      ;;
+    l)
+      prettier_opts="-l"
+      ;;
+    *)
+      echo 'Usage: bin/format [-al]'
+      echo 'Options:'
+      echo ' -a Run on all valid files, not just divergent files'
+      echo ' -l List non-conforming files and exit with non-zero if any exist'
+  esac
+done
+
+if [[ -n $files ]]
+then
+  npx prettier $prettier_opts $files
+else
+  exit 0
+fi

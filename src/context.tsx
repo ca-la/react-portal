@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Emitter from 'tiny-emitter';
+import { TinyEmitter } from 'tiny-emitter';
 
 interface PortalProviderProps {}
 
@@ -13,41 +13,34 @@ export interface PortalValue {
 const PortalContext = React.createContext<PortalValue | null>(null);
 
 export class PortalProvider extends React.PureComponent<PortalProviderProps> {
-  private emitter: Emitter.TinyEmitter | null = null;
-  private portals: Map<string, any[]> = new Map();
+  private emitter: TinyEmitter;
+  private portals: Map<string, React.ReactNode>;
 
   constructor(props: PortalProviderProps) {
     super(props);
 
-    this.emitter = new Emitter.TinyEmitter();
+    this.emitter = new TinyEmitter();
     this.portals = new Map();
   }
 
   public componentWillUnmount(): void {
-    this.emitter = null;
     this.portals.clear();
   }
 
   private subscribeToPortal = (name: string, callback: Function): void => {
-    if (this.emitter) {
-      this.emitter.on(name, callback);
-    }
+    this.emitter.on(name, callback);
   };
 
   private unsubscribeToPortal = (name: string, callback: Function): void => {
-    if (this.emitter) {
-      this.emitter.off(name, callback);
-    }
+    this.emitter.off(name, callback);
   };
 
-  private setPortal = (name: string, ...args: any[]): void => {
-    this.portals.set(name, args);
-    if (this.emitter) {
-      this.emitter.emit(name, args);
-    }
+  private setPortal = (name: string, children: React.ReactNode): void => {
+    this.portals.set(name, children);
+    this.emitter.emit(name, children);
   };
 
-  private getPortal = (name: string): any[] | undefined => {
+  private getPortal = (name: string): React.ReactNode | undefined => {
     return this.portals.get(name);
   };
 

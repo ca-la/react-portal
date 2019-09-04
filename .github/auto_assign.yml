@@ -1,0 +1,11 @@
+addReviewers: true
+addAssignees: false
+
+reviewers:
+  - alekhinen
+  - dylanpyle
+  - scotttrinh
+  - SebastianCoraccio
+  - skswanke
+
+numberOfReviewers: 1

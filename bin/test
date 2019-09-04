@@ -1,6 +1,24 @@
 #!/bin/bash
 
-set -e
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o noglob
 
-bin/format -al
-npx ava --verbose
+# Run all tests with Jest
+# Usage: bin/test [options to pass to Jest]
+
+main() {
+  ci=${CI:-"false"}
+
+  if [ $ci == "true" ]
+  then
+    # CircleCI is incorrectly reporting the number of available cores, so we
+    # hardcode to 2 for now.
+    npx jest -w 2
+  else
+    npx jest --verbose=false "$@"
+  fi
+}
+
+main "$@"

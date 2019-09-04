@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o noglob
+
+# Run all checks that CI needs to pass a build
+# Usage: bin/ci-check
+
+main() {
+  bin/format -al
+  bin/test
+  bin/build
+}
+
+main "$@"

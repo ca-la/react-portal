@@ -102,4 +102,39 @@ describe('<PortalProvider />', () => {
       'Inside the portal. a b Inside the portal. c Inside the portal. '
     );
   });
+
+  it('can pass contents from a deeply nested entrance to a deeply nested exit', () => {
+    const portalComponent = render(
+      <PortalProvider>
+        <div>
+          <div>
+            <span>This is interesting. </span>
+            <EntrancePortal name='one'>
+              <span>
+                Wow. <div>Inside the portal. </div>
+              </span>
+            </EntrancePortal>
+            <div>
+              <button></button>
+            </div>
+          </div>
+          <span>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <ExitPortal name='one' />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </span>
+        </div>
+      </PortalProvider>
+    );
+
+    expect(portalComponent.baseElement.textContent).toEqual(
+      'This is interesting. Wow. Inside the portal. '
+    );
+  });
 });

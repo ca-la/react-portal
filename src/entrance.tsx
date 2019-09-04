@@ -10,9 +10,8 @@ interface EntrancePortalProps {
 export function EntrancePortal(props: EntrancePortalProps): null {
   const portalValue: PortalValue | null = React.useContext(PortalContext);
 
-  // TODO: throw error?
   if (!portalValue) {
-    return null;
+    throw new Error(`EntrancePortal must be used inside a PortalProvider.`);
   }
 
   React.useEffect((): (() => void) => {

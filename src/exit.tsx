@@ -10,9 +10,8 @@ interface ExitPortalProps {
 export function ExitPortal(props: ExitPortalProps): JSX.Element | null {
   const portalValue: PortalValue | null = React.useContext(PortalContext);
 
-  // TODO: throw error?
   if (!portalValue) {
-    return null;
+    throw new Error(`ExitPortal must be used inside a PortalProvider.`);
   }
 
   return (

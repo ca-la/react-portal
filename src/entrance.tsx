@@ -1,56 +1,27 @@
 import * as React from 'react';
 
-import { PortalConsumer, PortalValue } from './context';
+import { PortalValue, PortalContext } from './context';
 
 interface EntrancePortalProps {
   name: string;
   children?: React.ReactNode;
 }
 
-interface EntranceProps extends EntrancePortalProps {
-  context: PortalValue;
-}
+export function EntrancePortal(props: EntrancePortalProps): null {
+  const portalValue: PortalValue | null = React.useContext(PortalContext);
 
-class Entrance extends React.PureComponent<EntranceProps> {
-  constructor(props: EntranceProps) {
-    super(props);
-
-    const { name, children, context } = this.props;
-    context.setPortal(name, children);
-  }
-
-  public componentDidUpdate(oldProps: EntranceProps) {
-    if (oldProps.children !== this.props.children) {
-      this.props.context.setPortal(name, this.props.children);
-    }
-  }
-
-  public componentWillUnmount() {
-    const { name, context } = this.props;
-    context.setPortal(name, null);
-  }
-
-  public render(): null {
+  // TODO: throw error?
+  if (!portalValue) {
     return null;
   }
-}
 
-export class EntrancePortal extends React.PureComponent<EntrancePortalProps> {
-  public render(): JSX.Element {
-    return (
-      <PortalConsumer>
-        {(portalContext: PortalValue | null): JSX.Element | null => {
-          if (!portalContext) {
-            return null;
-          }
+  React.useEffect((): (() => void) => {
+    portalValue.setPortal(props.name, props.children);
 
-          return (
-            <Entrance context={portalContext} name={this.props.name}>
-              {this.props.children}
-            </Entrance>
-          );
-        }}
-      </PortalConsumer>
-    );
-  }
+    return function cleanup(): void {
+      portalValue.setPortal(props.name, null);
+    };
+  }, [props.name, props.children]);
+
+  return null;
 }

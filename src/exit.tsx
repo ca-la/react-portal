@@ -1,53 +1,21 @@
 import * as React from 'react';
 
-import { PortalConsumer, PortalValue } from './context';
+import { PortalValue, PortalContext } from './context';
 
 interface ExitPortalProps {
   name: string;
   children?: React.ReactNode;
 }
 
-interface ExitProps extends ExitPortalProps {
-  context: PortalValue;
-}
+export function ExitPortal(props: ExitPortalProps): JSX.Element | null {
+  const portalValue: PortalValue | null = React.useContext(PortalContext);
 
-class Exit extends React.PureComponent<ExitProps> {
-  constructor(props: ExitProps) {
-    super(props);
-
-    const { name, context } = this.props;
-    context.subscribeToPortal(name, this.forceUpdater);
+  // TODO: throw error?
+  if (!portalValue) {
+    return null;
   }
 
-  public componentWillUnmount() {
-    const { name, context } = this.props;
-    context.unsubscribeFromPortal(name, this.forceUpdater);
-  }
-
-  public render(): React.ReactNode | null {
-    const { name, context } = this.props;
-    return context.getPortal(name) || null;
-  }
-
-  private forceUpdater = (): void => this.forceUpdate();
-}
-
-export class ExitPortal extends React.PureComponent<ExitPortalProps> {
-  public render(): JSX.Element {
-    return (
-      <PortalConsumer>
-        {(portalContext: PortalValue | null): JSX.Element | null => {
-          if (!portalContext) {
-            return null;
-          }
-
-          return (
-            <Exit context={portalContext} name={this.props.name}>
-              {this.props.children}
-            </Exit>
-          );
-        }}
-      </PortalConsumer>
-    );
-  }
+  return (
+    <React.Fragment>{portalValue.getPortal(props.name) || null}</React.Fragment>
+  );
 }

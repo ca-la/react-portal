@@ -67,6 +67,40 @@ describe('<PortalProvider />', () => {
     );
   });
 
+  it('can update the exit content', () => {
+    const portalComponent = render(
+      <PortalProvider>
+        <div>
+          a{' '}
+          <EntrancePortal name='one'>
+            <div>Inside the portal.</div>
+          </EntrancePortal>
+          b <ExitPortal name='one' />c
+        </div>
+      </PortalProvider>
+    );
+
+    expect(portalComponent.baseElement.textContent).toEqual(
+      'a b Inside the portal.c'
+    );
+
+    portalComponent.rerender(
+      <PortalProvider>
+        <div>
+          a{' '}
+          <EntrancePortal name='one'>
+            <div>Inside the portal (updated).</div>
+          </EntrancePortal>
+          b <ExitPortal name='one' />c
+        </div>
+      </PortalProvider>
+    );
+
+    expect(portalComponent.baseElement.textContent).toEqual(
+      'a b Inside the portal (updated).c'
+    );
+  });
+
   it('can pass contents from an entrance to a matching exit in any order', () => {
     const portalComponent = render(
       <PortalProvider>

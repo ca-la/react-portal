@@ -21,7 +21,7 @@ main() {
     exit 1
   fi
 
-  if [[ $(git rev-parse --abbrev-ref HEAD) != 'latest' ]] ; then
+  if [[ $(git rev-parse --abbrev-ref HEAD) != 'master' ]] ; then
     echo 'Cannot release from a branch other than master'
     exit 1
   fi

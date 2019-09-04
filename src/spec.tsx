@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cleanup, render } from '@testing-library/react';
 
-import { PortalProvider } from './index';
+import { PortalProvider, EntrancePortal } from './index';
 
 describe('<PortalProvider />', () => {
   afterEach(cleanup);
@@ -15,5 +15,21 @@ describe('<PortalProvider />', () => {
     );
 
     expect(portalComponent.getByText('Hello, World.')).toBeTruthy();
+  });
+
+  it('can contain an entrance portal with no exit', () => {
+    const portalComponent = render(
+      <PortalProvider>
+        <div>
+          Hello{' '}
+          <EntrancePortal name='entrance-one'>
+            <div>Entering the void.</div>
+          </EntrancePortal>
+          World
+        </div>
+      </PortalProvider>
+    );
+
+    expect(portalComponent.baseElement.textContent).toEqual('Hello World');
   });
 });

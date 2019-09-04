@@ -24,12 +24,12 @@ class Exit extends React.PureComponent<ExitProps> {
     context.unsubscribeFromPortal(name, this.forceUpdater);
   }
 
-  public render(): JSX.Element | null {
+  public render(): React.ReactNode | null {
     const { name, context } = this.props;
     return context.getPortal(name) || null;
   }
 
-  private forceUpdater = () => this.forceUpdate();
+  private forceUpdater = (): void => this.forceUpdate();
 }
 
 export class ExitPortal extends React.PureComponent<ExitPortalProps> {

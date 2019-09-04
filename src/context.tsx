@@ -4,10 +4,10 @@ import { TinyEmitter } from 'tiny-emitter';
 interface PortalProviderProps {}
 
 export interface PortalValue {
-  subscribeToPortal: Function;
-  unsubscribeFromPortal: Function;
-  setPortal: Function;
-  getPortal: Function;
+  subscribeToPortal: (name: string, callback: () => void) => void;
+  unsubscribeFromPortal: (name: string, callback: () => void) => void;
+  setPortal: (name: string, children: React.ReactNode) => void;
+  getPortal: (name: string) => React.ReactNode | undefined;
 }
 
 const PortalContext = React.createContext<PortalValue | null>(null);
@@ -27,11 +27,11 @@ export class PortalProvider extends React.PureComponent<PortalProviderProps> {
     this.portals.clear();
   }
 
-  private subscribeToPortal = (name: string, callback: Function): void => {
+  private subscribeToPortal = (name: string, callback: () => void): void => {
     this.emitter.on(name, callback);
   };
 
-  private unsubscribeToPortal = (name: string, callback: Function): void => {
+  private unsubscribeToPortal = (name: string, callback: () => void): void => {
     this.emitter.off(name, callback);
   };
 

@@ -9,24 +9,24 @@ export interface PortalValue {
   getPortal: (name: string) => React.ReactNode | undefined;
 }
 
+interface PortalMap {
+  [name: string]: React.ReactNode;
+}
+
 export const PortalContext = React.createContext<PortalValue | null>(null);
 
 export function PortalProvider(props: PortalProviderProps): JSX.Element {
-  const [portals, setPortals] = React.useState<Map<string, React.ReactNode>>(
-    new Map()
-  );
+  const [portals, setPortals] = React.useState<PortalMap>({});
 
   const setPortal = React.useCallback(
     (name: string, children: React.ReactNode): void => {
-      const newPortals = new Map(portals);
-      newPortals.set(name, children);
-      setPortals(newPortals);
+      setPortals({ ...portals, [name]: children });
     },
     [portals, setPortals]
   );
   const getPortal = React.useCallback(
     (name: string): React.ReactNode | undefined => {
-      return portals.get(name);
+      return portals[name];
     },
     [portals]
   );

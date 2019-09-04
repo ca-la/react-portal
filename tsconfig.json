@@ -4,6 +4,7 @@
     "module": "commonjs",
     "lib": ["es2017"],
     "declaration": true,
+    "jsx": "react",
     "outDir": "./dist/",
     "strict": true,
     "importHelpers": true,
@@ -12,9 +13,9 @@
     "esModuleInterop": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],
   "exclude": [
-    "**/*spec.ts"
+    "**/*spec.ts*"
   ]
 }

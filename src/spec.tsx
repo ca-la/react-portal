@@ -162,6 +162,30 @@ describe('<PortalProvider />', () => {
     );
   });
 
+  it('can render multiple entrances for multiple exits', () => {
+    const portalComponent = render(
+      <PortalProvider>
+        <div>
+          Portals.
+          <div>
+            <EntrancePortal name='one'>One.</EntrancePortal>
+            <div>
+              <EntrancePortal name='two'>Two.</EntrancePortal>
+            </div>
+            <EntrancePortal name='three'>Three.</EntrancePortal>
+          </div>
+          <ExitPortal name='one' />
+          <ExitPortal name='two' />
+          <ExitPortal name='three' />
+        </div>
+      </PortalProvider>
+    );
+
+    expect(portalComponent.baseElement.textContent).toEqual(
+      'Portals.One.Two.Three.'
+    );
+  });
+
   it('can pass contents from a deeply nested entrance to a deeply nested exit', () => {
     const portalComponent = render(
       <PortalProvider>

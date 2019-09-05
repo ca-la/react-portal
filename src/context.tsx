@@ -13,22 +13,44 @@ interface PortalMap {
   [name: string]: React.ReactNode;
 }
 
+type PortalAction = {
+  type: 'portals/SET';
+  name: string;
+  children: React.ReactNode;
+};
+
+function portalReducer(state: PortalMap, action: PortalAction): PortalMap {
+  switch (action.type) {
+    case 'portals/SET': {
+      return {
+        ...state,
+        [action.name]: action.children
+      };
+    }
+
+    default:
+      return state;
+  }
+}
+
 export const PortalContext = React.createContext<PortalValue | null>(null);
 
 export function PortalProvider(props: PortalProviderProps): JSX.Element {
-  const [portals, setPortals] = React.useState<PortalMap>({});
+  const [portalState, portalDispatch] = React.useReducer<
+    React.Reducer<PortalMap, PortalAction>
+  >(portalReducer, {});
 
   const setPortal = React.useCallback(
     (name: string, children: React.ReactNode): void => {
-      setPortals({ ...portals, [name]: children });
+      portalDispatch({ type: 'portals/SET', name, children });
     },
-    [portals, setPortals]
+    [portalDispatch]
   );
   const getPortal = React.useCallback(
     (name: string): React.ReactNode | undefined => {
-      return portals[name];
+      return portalState[name];
     },
-    [portals]
+    [portalState]
   );
 
   return (

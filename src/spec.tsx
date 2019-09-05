@@ -163,6 +163,7 @@ describe('<PortalProvider />', () => {
   });
 
   it('can render multiple entrances for multiple exits', () => {
+    console.log('MAIN BUGGER');
     const portalComponent = render(
       <PortalProvider>
         <div>
@@ -180,6 +181,7 @@ describe('<PortalProvider />', () => {
         </div>
       </PortalProvider>
     );
+    console.log('END MAIN BUGGER');
 
     expect(portalComponent.baseElement.textContent).toEqual(
       'Portals.One.Two.Three.'

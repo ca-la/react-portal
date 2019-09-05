@@ -20,7 +20,7 @@ export function EntrancePortal(props: EntrancePortalProps): null {
     return function cleanup(): void {
       portalValue.setPortal(props.name, null);
     };
-  }, [props.name, props.children]);
+  }, [props.name, props.children, portalValue.setPortal]);
 
   return null;
 }

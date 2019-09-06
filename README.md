@@ -49,4 +49,14 @@ The rendered output of the above JSX statement will place the textual content of
 </div>
 ```
 
-For more examples, see the tests written in [src/spec.tsx](https://github.com/ca-la/react-portal/blob/update-metadata/src/spec.tsx).
+For more examples, see the tests written in [src/spec.tsx](src/spec.tsx).
+
+## Contributing
+
+To tag off and release a new version to npm, run the release script:
+
+```
+$ ./bin/release patch    # 0.0.x - bug fixes
+$ ./bin/release minor    # 0.x.0 - new features or changes
+$ ./bin/release major    # x.0.0 - large, backwards-incompatible changes
+```

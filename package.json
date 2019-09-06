@@ -16,7 +16,7 @@
     "url": "git@github.com:ca-la/react-portal.git"
   },
   "author": "CALA <devops@ca.la>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ca-la/react-portal/issues"
   },
@@ -24,6 +24,14 @@
   "peerDependencies": {
     "react": "^16.8.5"
   },
+  "keywords": [
+    "React",
+    "TypeScript",
+    "react-portal",
+    "react-native-portal",
+    "portal",
+    "react-pixi"
+  ],
   "devDependencies": {
     "@testing-library/react": "^9.1.4",
     "@types/jest": "^24.0.18",

@@ -49,4 +49,4 @@ The rendered output of the above JSX statement will place the textual content of
 </div>
 ```
 
-For more examples, see the tests written in `src/spec.tsx`.
+For more examples, see the tests written in [src/spec.tsx](https://github.com/ca-la/react-portal/blob/update-metadata/src/spec.tsx).

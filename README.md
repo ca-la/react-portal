@@ -39,7 +39,7 @@ In order to use the `EntrancePortal` and `ExitPortal`, a single `PortalProvider`
 </PortalProvider>
 ```
 
-The rendered output of the above JSX statement will place the textual content of `<EntrancePortal />` at the place of `<ExitPortal />`. In effect, the rendered output will look something like
+The rendered output of the above JSX statement will place the textual content of `<EntrancePortal />` at the place of `<ExitPortal />`. In effect, the rendered output will look something like:
 
 ```html
 <div>

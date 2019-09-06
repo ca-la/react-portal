@@ -29,7 +29,8 @@
     "TypeScript",
     "react-portal",
     "react-native-portal",
-    "portal"
+    "portal",
+    "react-pixi"
   ],
   "devDependencies": {
     "@testing-library/react": "^9.1.4",

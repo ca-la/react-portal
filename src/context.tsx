@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 interface PortalProviderProps {
   children?: React.ReactNode;
@@ -14,17 +14,17 @@ interface PortalMap {
 }
 
 type PortalAction = {
-  type: 'portals/SET';
+  type: "portals/SET";
   name: string;
   children: React.ReactNode;
 };
 
 function portalReducer(state: PortalMap, action: PortalAction): PortalMap {
   switch (action.type) {
-    case 'portals/SET': {
+    case "portals/SET": {
       return {
         ...state,
-        [action.name]: action.children
+        [action.name]: action.children,
       };
     }
 
@@ -42,7 +42,7 @@ export function PortalProvider(props: PortalProviderProps): JSX.Element {
 
   const setPortal = React.useCallback(
     (name: string, children: React.ReactNode): void => {
-      portalDispatch({ type: 'portals/SET', name, children });
+      portalDispatch({ type: "portals/SET", name, children });
     },
     [portalDispatch]
   );
@@ -57,7 +57,7 @@ export function PortalProvider(props: PortalProviderProps): JSX.Element {
     <PortalContext.Provider
       value={{
         setPortal,
-        getPortal
+        getPortal,
       }}
     >
       {props.children}

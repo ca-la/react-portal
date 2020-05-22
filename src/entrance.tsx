@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { PortalValue, PortalContext } from './context';
+import { PortalValue, PortalContext } from "./context";
 
 interface EntrancePortalProps {
   name: string;

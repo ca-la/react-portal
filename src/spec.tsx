@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { cleanup, render } from '@testing-library/react';
+import * as React from "react";
+import { cleanup, render } from "@testing-library/react";
 
-import { PortalProvider, EntrancePortal, ExitPortal } from './index';
+import { PortalProvider, EntrancePortal, ExitPortal } from "./index";
 
-describe('<PortalProvider />', () => {
+describe("<PortalProvider />", () => {
   afterEach(cleanup);
 
-  it('will throw an error if a consumer is passed in with no provider', () => {
+  it("will throw an error if a consumer is passed in with no provider", () => {
     const originalErrorFn = console.error;
     console.error = jest.fn();
 
@@ -14,24 +14,24 @@ describe('<PortalProvider />', () => {
       render(
         <div>
           Hello World.
-          <EntrancePortal name='entrance-once' />
+          <EntrancePortal name="entrance-once" />
         </div>
       )
-    ).toThrowError('EntrancePortal must be used inside a PortalProvider.');
+    ).toThrowError("EntrancePortal must be used inside a PortalProvider.");
 
     expect(() =>
       render(
         <div>
           Hello World.
-          <ExitPortal name='entrance-once' />
+          <ExitPortal name="entrance-once" />
         </div>
       )
-    ).toThrowError('ExitPortal must be used inside a PortalProvider.');
+    ).toThrowError("ExitPortal must be used inside a PortalProvider.");
 
     console.error = originalErrorFn;
   });
 
-  it('can render an app in the provider', () => {
+  it("can render an app in the provider", () => {
     const SampleApp = (): JSX.Element => <div>Hello, World.</div>;
     const portalComponent = render(
       <PortalProvider>
@@ -39,15 +39,15 @@ describe('<PortalProvider />', () => {
       </PortalProvider>
     );
 
-    expect(portalComponent.getByText('Hello, World.')).toBeTruthy();
+    expect(portalComponent.getByText("Hello, World.")).toBeTruthy();
   });
 
-  it('can contain an entrance portal with no exit', () => {
+  it("can contain an entrance portal with no exit", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          Hello{' '}
-          <EntrancePortal name='entrance-one'>
+          Hello{" "}
+          <EntrancePortal name="entrance-one">
             <div>Entering the void.</div>
           </EntrancePortal>
           World
@@ -55,83 +55,83 @@ describe('<PortalProvider />', () => {
       </PortalProvider>
     );
 
-    expect(portalComponent.baseElement.textContent).toEqual('Hello World');
+    expect(portalComponent.baseElement.textContent).toEqual("Hello World");
   });
 
-  it('can contain an exit that is not connected to an entrance', () => {
+  it("can contain an exit that is not connected to an entrance", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          a{' '}
-          <EntrancePortal name='entrance-one'>
+          a{" "}
+          <EntrancePortal name="entrance-one">
             <div>Entering the void.</div>
           </EntrancePortal>
-          b <ExitPortal name='entrance-two' />c
+          b <ExitPortal name="entrance-two" />c
         </div>
       </PortalProvider>
     );
 
-    expect(portalComponent.baseElement.textContent).toEqual('a b c');
+    expect(portalComponent.baseElement.textContent).toEqual("a b c");
   });
 
-  it('can pass contents from an entrance to a matching exit', () => {
+  it("can pass contents from an entrance to a matching exit", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          a{' '}
-          <EntrancePortal name='one'>
+          a{" "}
+          <EntrancePortal name="one">
             <div>Inside the portal.</div>
           </EntrancePortal>
-          b <ExitPortal name='one' />c
+          b <ExitPortal name="one" />c
         </div>
       </PortalProvider>
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'a b Inside the portal.c'
+      "a b Inside the portal.c"
     );
   });
 
-  it('can update the exit content', () => {
+  it("can update the exit content", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          a{' '}
-          <EntrancePortal name='one'>
+          a{" "}
+          <EntrancePortal name="one">
             <div>Inside the portal.</div>
           </EntrancePortal>
-          b <ExitPortal name='one' />c
+          b <ExitPortal name="one" />c
         </div>
       </PortalProvider>
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'a b Inside the portal.c'
+      "a b Inside the portal.c"
     );
 
     portalComponent.rerender(
       <PortalProvider>
         <div>
-          a{' '}
-          <EntrancePortal name='one'>
+          a{" "}
+          <EntrancePortal name="one">
             <div>Inside the portal (updated).</div>
           </EntrancePortal>
-          b <ExitPortal name='one' />c
+          b <ExitPortal name="one" />c
         </div>
       </PortalProvider>
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'a b Inside the portal (updated).c'
+      "a b Inside the portal (updated).c"
     );
   });
 
-  it('can pass contents from an entrance to a matching exit in any order', () => {
+  it("can pass contents from an entrance to a matching exit in any order", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          <ExitPortal name='one' />a{' '}
-          <EntrancePortal name='one'>
+          <ExitPortal name="one" />a{" "}
+          <EntrancePortal name="one">
             <div>Inside the portal.</div>
           </EntrancePortal>
           b c
@@ -140,59 +140,59 @@ describe('<PortalProvider />', () => {
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'Inside the portal.a b c'
+      "Inside the portal.a b c"
     );
   });
 
-  it('can pass contents from multiple entrances to the matching exit', () => {
+  it("can pass contents from multiple entrances to the matching exit", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          <ExitPortal name='one' />a{' '}
-          <EntrancePortal name='one'>
+          <ExitPortal name="one" />a{" "}
+          <EntrancePortal name="one">
             <div>Inside the portal. </div>
           </EntrancePortal>
-          b <ExitPortal name='one' />c <ExitPortal name='one' />
+          b <ExitPortal name="one" />c <ExitPortal name="one" />
         </div>
       </PortalProvider>
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'Inside the portal. a b Inside the portal. c Inside the portal. '
+      "Inside the portal. a b Inside the portal. c Inside the portal. "
     );
   });
 
-  it('can render multiple entrances for multiple exits', () => {
+  it("can render multiple entrances for multiple exits", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
           Portals.
           <div>
-            <EntrancePortal name='one'>One.</EntrancePortal>
+            <EntrancePortal name="one">One.</EntrancePortal>
             <div>
-              <EntrancePortal name='two'>Two.</EntrancePortal>
+              <EntrancePortal name="two">Two.</EntrancePortal>
             </div>
-            <EntrancePortal name='three'>Three.</EntrancePortal>
+            <EntrancePortal name="three">Three.</EntrancePortal>
           </div>
-          <ExitPortal name='one' />
-          <ExitPortal name='two' />
-          <ExitPortal name='three' />
+          <ExitPortal name="one" />
+          <ExitPortal name="two" />
+          <ExitPortal name="three" />
         </div>
       </PortalProvider>
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'Portals.One.Two.Three.'
+      "Portals.One.Two.Three."
     );
   });
 
-  it('can pass contents from a deeply nested entrance to a deeply nested exit', () => {
+  it("can pass contents from a deeply nested entrance to a deeply nested exit", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
           <div>
             <span>This is interesting. </span>
-            <EntrancePortal name='one'>
+            <EntrancePortal name="one">
               <span>
                 Wow. <div>Inside the portal. </div>
               </span>
@@ -206,7 +206,7 @@ describe('<PortalProvider />', () => {
               <tbody>
                 <tr>
                   <td>
-                    <ExitPortal name='one' />
+                    <ExitPortal name="one" />
                   </td>
                 </tr>
               </tbody>
@@ -217,20 +217,20 @@ describe('<PortalProvider />', () => {
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'This is interesting. Wow. Inside the portal. '
+      "This is interesting. Wow. Inside the portal. "
     );
   });
 
-  it('the last entrance renders to the exit', () => {
+  it("the last entrance renders to the exit", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          <ExitPortal name='one' /> a{' '}
-          <EntrancePortal name='one'>
+          <ExitPortal name="one" /> a{" "}
+          <EntrancePortal name="one">
             <div>1. Inside the portal</div>
           </EntrancePortal>
           b c
-          <EntrancePortal name='one'>
+          <EntrancePortal name="one">
             <div>2. Inside the portal</div>
           </EntrancePortal>
         </div>
@@ -238,19 +238,19 @@ describe('<PortalProvider />', () => {
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      '2. Inside the portal a b c'
+      "2. Inside the portal a b c"
     );
   });
 
-  it('the exit never renders its own children', () => {
+  it("the exit never renders its own children", () => {
     const portalComponent = render(
       <PortalProvider>
         <div>
-          <ExitPortal name='one'>
+          <ExitPortal name="one">
             <div>I am an exit portal.</div>
-          </ExitPortal>{' '}
-          a{' '}
-          <EntrancePortal name='one'>
+          </ExitPortal>{" "}
+          a{" "}
+          <EntrancePortal name="one">
             <div>Inside the portal.</div>
           </EntrancePortal>
           b c
@@ -259,7 +259,7 @@ describe('<PortalProvider />', () => {
     );
 
     expect(portalComponent.baseElement.textContent).toEqual(
-      'Inside the portal. a b c'
+      "Inside the portal. a b c"
     );
   });
 });
